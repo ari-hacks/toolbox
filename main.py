@@ -1,4 +1,9 @@
+import os 
+import base64
 import click
+import subprocess
+from pandas.io import clipboard
+
 
 @click.group()
 def cli():
@@ -14,7 +19,7 @@ def compress_file(file):
 
 @cli.command("email-manager")
 @click.argument("email")
-def compress_file(email):
+def compress_file():
     """Email Manager"""
     pass
 
@@ -26,10 +31,11 @@ def compress_file(url):
     pass
 
 @cli.command("password-generator")
-@click.argument("password")
-def compress_file(password):
+def compress_file():
     """Generate Password"""
-    pass
+    generated_password = base64.b64encode(os.urandom(65)).decode('utf-8')
+    clipboard.copy(generated_password)
+    return print(generated_password)
 
 @cli.command("sys-stats")
 @click.argument("stats")
